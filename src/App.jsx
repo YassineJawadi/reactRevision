@@ -1,20 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import {data} from "react-router-dom";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Properties from './components/Properties';
+import Property from "./components/property.jsx";
+// ReservationForm can be added later
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+    return (
+        <div className="container">
+            <Routes>
+                <Route path="/" element={<Properties />} />
+                <Route path="/property/:id" element={<Property />} />
+            </Routes>
+        </div>
+    );
+};
 
-  return (
-      <div style={{ border: '1px solid #ccc', padding: '1rem', margin: '1rem 0', borderRadius: '8px' }}>
-          <h4>{data.title}</h4>
-          <p><strong>Adresse:</strong> {data.address}</p>
-          <p><strong>Prix:</strong> {data.price} DT</p>
-          <p><strong>Nombre de Vue:</strong> {data.views}</p>
-      </div>
-  )
-}
-
-export default App
+export default App;
