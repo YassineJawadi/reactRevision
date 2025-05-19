@@ -1,0 +1,19 @@
+1. Search by title or name
+   Example: input text -> filters by title
+   p.title.toLowerCase().includes(filters.title.toLowerCase())
+
+2. Filter by numeric range (e.g., price, views, age)
+   Example: min and max
+   p.price >= minPrice && p.price <= maxPrice
+
+3. Filter by boolean (e.g., available = true/false)
+   Example: select dropdown for true/false
+   String(p.available) === filters.available
+
+4. Sort by numeric value (ascending/descending)
+   Example: sortOrder = 'asc' or 'desc'
+   p.sort((a, b) => a.price - b.price)
+
+5. Filter by exact category or type
+   Example: select input (e.g., apartment, house, villa)
+   p.type === filters.type
