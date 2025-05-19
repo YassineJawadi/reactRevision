@@ -1,68 +1,79 @@
 import React, { useEffect, useState } from 'react';
-import { getProperties } from '../api/api';
 import Property from './Property';
 
 const Properties = () => {
-    const [properties, setProperties] = useState([]);
-    const [filtered, setFiltered] = useState([]);
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
-
-    useEffect(() => {
-        fetchProperties();
-    }, []);
-
-    useEffect(() => {
-        filterProperties();
-    }, [minPrice, maxPrice, properties]);
-
-    const fetchProperties = async () => {
-        try {
-            const response = await getProperties();
-            console.log("API response:", response.data); // 👈 Add this
-            setProperties(response.data);
-        } catch (error) {
-            console.error('Error fetching properties:', error);
-        }
-    };
 
 
-    const filterProperties = () => {
-        const min = parseFloat(minPrice) || 0;
-        const max = parseFloat(maxPrice) || Infinity;
 
-        const filteredList = properties.filter(
-            (property) => property.price >= min && property.price <= max
-        );
-        setFiltered(filteredList);
-    };
+    //recherche stuff
 
-    return (
-        <div>
-            <h2>Available Properties</h2>
 
-            <div>
-                <input
-                    type="number"
-                    placeholder="Min Price"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                />
-                <input
-                    type="number"
-                    placeholder="Max Price"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                />
-            </div>
+     const [query, setQuery] = useState('');
 
-            <div>
-                {filtered.map((property) => (
-                    <Property key={property.id} data={property} />
-                ))}
-            </div>
-        </div>
-    );
+  const filtered = data.filter(item =>
+    query === '' || item.price <= parseFloat(query)
+  );
+
+    //recherche stuff
+
+
+
+
+
+  const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/properties')
+      .then(res => res.json())
+      .then(data => {
+        console.log('Fetched properties:', data);  // <-- Add this here
+        setProperties(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);  // <-- And this here
+        setLoading(false);
+      });
+  }, []);
+
+  console.log('properties state:', properties);  // <-- Add this here (inside component, before return)
+
+  if (loading) return <p>Loading...</p>;
+  if (!properties.length) return <p>No properties found</p>;
+
+  return (
+    <div>
+
+{/* search related div */}
+
+       <div>
+      <input
+        type="number"
+        placeholder="Search by max price..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+
+      <ul>
+        {filtered.map(item => (
+          <li key={item.id}>
+            {item.title} - ${item.price}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+
+{/* end of search related div */}
+
+
+
+      {properties.map(prop => (
+        <Property key={prop.id} property={prop} />
+      ))}
+    </div>
+  );
 };
 
 export default Properties;

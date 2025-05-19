@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { getProperties } from '../api/api';
-import Property from './Property';
+// src/components/Property.jsx
+import React from 'react';
 
-const Properties = () => {
-    const [properties, setProperties] = useState([]);
+const Property = ({ property }) => {
+  if (!property) return <p>No property data.</p>;
 
-    useEffect(() => {
-        fetchProperties();
-    }, []);
-
-    const fetchProperties = async () => {
-        try {
-            const response = await getProperties();
-            setProperties(response.data);
-        } catch (error) {
-            console.error('Error fetching properties:', error);
-        }
-    };
-
-    return (
-        <div>
-            <h2>Liste des propriétés</h2>
-            {properties.map((property) => (
-                <Property key={property.id} data={property} />
-            ))}
-        </div>
-    );
+  return (
+    <div style={{ border: '1px solid black', padding: 10, margin: 10 }}>
+      <h3>{property.title}</h3>
+      <p>Price: ${property.price}</p>
+      <p>Available: {property.available ? 'Yes' : 'No'}</p>
+      <p>Views: {property.views}</p>
+    </div>
+  );
 };
 
-export default Properties;
+export default Property;
