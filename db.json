@@ -1,20 +1,20 @@
 {
   "properties": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Maison de campagne",
       "address": "456 Chemin des Fleurs",
       "price": 750,
-      "available": true,
-      "views": 0
+      "available": false,
+      "views": 4
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Appartement centre-ville",
       "address": "789 Avenue du Centre",
       "price": 1200,
-      "available": true,
-      "views": 0
+      "available": false,
+      "views": 3
     }
   ]
 }
